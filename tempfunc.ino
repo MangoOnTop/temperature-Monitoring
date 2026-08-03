@@ -3,12 +3,13 @@
 #include <Adafruit_SSD1306.h>
 #include <OneWire.h>
 #include <DallasTemperature.h>
+#include <Adafruit_SH110X.h>
 
 // OLED Configuration
 #define SCREEN_WIDTH 128
 #define SCREEN_HEIGHT 64
 #define OLED_RESET -1
-Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
+Adafruit_SH1106G display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
 // DS18B20 Configuration
 #define ONE_WIRE_BUS 4 // Pin where DS18B20 Data wire is connected
@@ -20,11 +21,9 @@ void setup()
     Serial.begin(115200);
 
     // Start OLED
-    if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C))
-    {
-        Serial.println(F("OLED connection failed"));
-        for (;;)
-            ;
+    if (!display.begin(0x3C, true)) {
+      Serial.println("OLED connection failed");
+      for (;;);
     }
 
     // Start Sensor
